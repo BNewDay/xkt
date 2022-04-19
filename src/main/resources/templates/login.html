@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<form method="get" onsubmit="s()" id="fo" action="/">
+  <div><label>用户:</label><input type="text" name="u_userName" id="u_userName"/></div>
+  <div><label>密码:</label><input type="password" name="u_password" id="u_password"/></div>
+  <div>
+      <label><input type="radio" name="identity" value="user">用户</label>
+      <label><input type="radio" name="identity" value="manager">管理员</label>
+  </div>
+  <div><button type="submit" value="登录">登录</button> </div>
+</form>
+</body>
+<script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+    function s(){
+        $.ajax({
+            url: "http://localhost:8090/auth",
+            method: "post",
+            data: JSON.stringify({
+                "u_userName":$("#u_userName").val(),
+                "u_password":$("#u_password").val()
+            }),
+            headers: {
+                "Content-Type":"application/json;charset=utf8"
+            },
+            success: function (ret){
+                console.log(ret)
+
+            }
+        })
+    }
+</script>
+</html>

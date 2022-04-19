@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.system_master_springboot_maven.dao.RaspberryPiDao">
+    <insert id="insertPi" parameterType="RaspberryPi">
+        insert into RaspberryPi values (#{rasp_apiKey},
+                    #{rasp_temperature}, #{rasp_humidity},#{rasp_pressure},
+                    #{rasp_pitch}, #{rasp_roll},#{rasp_yaw},
+                    #{rasp_accX}, #{rasp_accY}, #{rasp_accZ})
+    </insert>
+
+    <delete id="deletePi" parameterType="String">
+        delete from RaspberryPi where rasp_apiKey = #{rasp_apiKey}
+    </delete>
+
+    <select id="selectPiByApiKey" parameterType="String" resultType="RaspberryPi">
+        select * from RaspberryPi where rasp_apiKey = #{rasp_apiKey}
+    </select>
+
+    <select id="selectAll" resultType="RaspberryPi">
+        select * from RaspberryPi
+    </select>
+
+    <update id="updatePi" parameterType="RaspberryPi">
+        update RaspberryPi set rasp_temperature = #{rasp_temperature},
+                               rasp_humidity = #{rasp_humidity},
+                               rasp_pressure = #{rasp_pressure},
+                               rasp_pitch = #{rasp_pitch},
+                               rasp_roll = #{rasp_roll},
+                               rasp_yaw = #{rasp_yaw},
+                               rasp_accX = #{rasp_accX},
+                               rasp_accY = #{rasp_accY},
+                               rasp_accZ = #{rasp_accZ}
+                                where rasp_apiKey = #{rasp_apiKey}
+    </update>
+</mapper>

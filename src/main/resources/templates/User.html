@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<a th:href="@{/user/queryPi}">查看设备</a> |
+<a th:href="@{/user/queryOld}">老人信息</a> |
+<a th:href="@{/user/myInfo}">我的信息</a>
+<hr>
+<a th:href="@{/logout}" th:text="Logout"></a>
+</body>
+</html>

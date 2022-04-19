@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script th:type="text/javascript" th:href="../static/js/register.js"></script>
+    <title>UserRegister</title>
+</head>
+<body>
+<p th:text="${msg}" style="color: red"></p>
+<form th:method="post" th:action="/re">
+    <table>
+        <tr>
+            <th align="left">
+                <label>名称</label>
+            </th>
+            <th>
+                <input th:type="text" th:value="name"/>
+            </th>
+        </tr>
+        <tr>
+            <th align="left">
+                <label>密码</label>
+            </th>
+            <th>
+                <input th:type="password" th:value="password"/>
+            </th>
+        </tr>
+        <tr>
+            <th align="left">
+                <label>确认密码</label>
+            </th>
+            <th>
+                <input th:type="password" th:value="sure"/>
+            </th>
+        </tr>
+        <tr>
+            <th align="left">
+                <label>用户类型</label>
+            </th>
+            <th>
+                <input th:type="password" th:value="sure"/>
+            </th>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
