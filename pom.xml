@@ -128,11 +128,7 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.4.1</version>
 		</dependency>
-		<!--spring security依赖-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+
 
 		<!--JWT-->
 		<dependency>
@@ -140,21 +136,38 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.19.1</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+			<version>0.11.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.3.7</version>
 		</dependency>
 
 
-		<!--shiro依赖-->
-		<!--<dependency>
+		<!--shiro安全框架依赖-->
+		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
-			<version>1.4.1</version>
-		</dependency>-->
+			<version>1.9.0</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.webjars</groupId>

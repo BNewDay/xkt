@@ -1,19 +1,29 @@
 package com.example.system_master_springboot_maven.utils;
 
+import cn.hutool.crypto.asymmetric.RSA;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
 
 public class JwtUtil {
     // token时效：24小时
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     // 签名哈希的密钥，对于不同的加密算法来说含义不同
-    public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
-
+    public static String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
+    static {
+        int len = APP_SECRET.length();
+        StringBuilder sb = new StringBuilder(APP_SECRET);
+        for (int i = 0; i < 4048/len; i++){
+            sb.append(APP_SECRET);
+        }
+        APP_SECRET = sb.toString();
+    }
     /**
      * 根据用户id和昵称生成token
      * @param id  用户id
@@ -81,5 +91,44 @@ public class JwtUtil {
         Claims claims = claimsJws.getBody();
         return (String)claims.get("id");
     }
+
+    private static final String RSA_PRIVATE_KEY = "...";
+    private static final String RSA_PUBLIC_KEY = "...";
+
+    /**
+     * 根据用户id和昵称生成token
+     * @param id  用户id
+     * @param nickname 用户昵称
+     * @return JWT规则生成的token
+     */
+    public static String getJwtTokenRsa(String id, String nickname){
+        // 利用hutool创建RSA
+        RSA rsa = new RSA(RSA_PRIVATE_KEY, null);
+        RSAPrivateKey privateKey = (RSAPrivateKey) rsa.getPrivateKey();
+        String JwtToken = Jwts.builder()
+                .setSubject("baobao-user")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                .claim("id", id)
+                .claim("nickname", nickname)
+                // 签名指定私钥
+                .signWith(privateKey, SignatureAlgorithm.RS256)
+                .compact();
+        return JwtToken;
+    }
+
+    /**
+     * 判断token是否存在与有效
+     * @param jwtToken token字符串
+     * @return 如果token有效返回true，否则返回false
+     */
+    public static Jws<Claims> decodeRsa(String jwtToken) {
+        RSA rsa = new RSA(null, RSA_PUBLIC_KEY);
+        RSAPublicKey publicKey = (RSAPublicKey) rsa.getPublicKey();
+        // 验签指定公钥
+        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(jwtToken);
+        return claimsJws;
+    }
+
 
 }

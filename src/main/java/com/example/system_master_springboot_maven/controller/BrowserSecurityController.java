@@ -1,3 +1,4 @@
+/*
 package com.example.system_master_springboot_maven.controller;
 
 import org.springframework.http.HttpStatus;
@@ -26,12 +27,14 @@ public class BrowserSecurityController {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    /**
+    */
+/**
      * 当需要身份认证时跳转到这里
      * @param request
      * @param response
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/authentication/require",method = RequestMethod.GET)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED) //未授权状态码
     public String requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -51,3 +54,4 @@ public class BrowserSecurityController {
     }
 
 }
+*/

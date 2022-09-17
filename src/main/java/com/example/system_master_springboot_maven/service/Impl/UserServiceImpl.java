@@ -4,7 +4,6 @@ import com.example.system_master_springboot_maven.dao.UserDao;
 import com.example.system_master_springboot_maven.pojo.User;
 import com.example.system_master_springboot_maven.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Override
     public User addUser(User user) {
@@ -50,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user){
-        System.out.println(passwordEncoder.encode(user.getU_password()));
+        //System.out.println(passwordEncoder.encode(user.getU_password()));
         User u = userDao.selectUserByName(user.getU_userName());
         if (u != null){
             if (u.getU_password().equals(user.getU_password())){

@@ -28,6 +28,8 @@ public class BaseController {
     UserService userService;
     @Autowired
     ManagerService managerService;
+    @Autowired
+    static User u1;
     
     
     //初始页面
@@ -44,7 +46,7 @@ public class BaseController {
         return "login";
     }
 
-    @PostMapping("/auth")
+    @RequestMapping("/auth")
     @ResponseBody
     @ApiOperation("登录验证")
     public Map toAuth(@RequestBody User user){
@@ -54,14 +56,17 @@ public class BaseController {
         Map<String,Object> map = new HashMap<>();
         try{
             User userDB = userService.login(user);
+            System.out.println(userDB);
             Map<String,String> payload = new HashMap<>();
             payload.put("name",userDB.getU_userName());
-            payload.put("nickName",user.getU_nickName());
+            payload.put("nickName",userDB.getU_nickName());
             //生成JWT令牌
-            String token = JwtUtil.getJwtToken(user.getU_userName(),user.getU_nickName());
+            String token = JwtUtil.getJwtToken(userDB.getU_userName(),userDB.getU_nickName());
             map.put("state","true");
             map.put("msg","认证成功");
             map.put("token",token);//响应token
+            u1 = user;
+            System.out.println(token);
         } catch (Exception e) {
             map.put("state","false");
             map.put("msg","认证失败");
@@ -100,9 +105,23 @@ public class BaseController {
         }
     }
 
-    @GetMapping("/Test")
-    public String t(){
-        return "Test";
+    @RequestMapping("/Test")
+    @ResponseBody
+    public Map t(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        String token = request.getHeader("token");
+        System.out.println(token);
+        boolean au = JwtUtil.checkToken(token);
+        System.out.println(au);
+        if (au){
+            map.put("status","200");
+            map.put("message","成功");
+            map.put("vo", u1);
+        }else {
+            map.put("status","400");
+            map.put("message","未授权");
+        }
+        return map;
     }
 
     @GetMapping("/Failure")
